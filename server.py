@@ -5,8 +5,14 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import os
+import shutil
 from dotenv import load_dotenv
 load_dotenv()
+
+# Ensure the generated_decks directory exists
+GENERATED_DIR = os.path.join(os.getcwd(), "generated_decks")
+if not os.path.exists(GENERATED_DIR):
+    os.makedirs(GENERATED_DIR)
 
 import json
 from gemini_agent import generate_event_data, generate_poster_concepts, generate_brand_identity
@@ -65,16 +71,21 @@ def generate(req: PromptRequest):
     workspace_url = create_event_workspace(event_json)
     pptx_path = generate_pitch_deck(event_json)
 
+    # Move the file to the dedicated directory
+    final_filename = os.path.basename(pptx_path)
+    final_path = os.path.join(GENERATED_DIR, final_filename)
+    shutil.move(pptx_path, final_path)
+
     return {
         "status": "success",
         "workspace_url": workspace_url,
-        "pptx_filename": os.path.basename(pptx_path),
+        "pptx_filename": final_filename,
         "event_data": event_json
     }
 
 @app.get("/download/{filename}")
 def download_pptx(filename: str):
-    path = os.path.join(os.getcwd(), filename)
+    path = os.path.join(GENERATED_DIR, filename)
     if not os.path.exists(path):
         return {"error": "File not found"}
     return FileResponse(
