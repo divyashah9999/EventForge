@@ -13,7 +13,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
 from mcp.server.fastmcp import FastMCP
 from main import run_eventforge
 
-# Initialize FastMCP - This name will appear in Stitch/Antigravity
+# Initialize FastMCP
 mcp = FastMCP("EventForge")
 
 @mcp.tool()

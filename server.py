@@ -14,7 +14,7 @@ from notion_agent import create_event_workspace
 from pptx_agent import generate_pitch_deck
 
 app = FastAPI()
-app.mount("/ui", StaticFiles(directory="stitch", html=True), name="ui")
+app.mount("/ui", StaticFiles(directory="ui", html=True), name="ui")
 
 app.add_middleware(
     CORSMiddleware,
