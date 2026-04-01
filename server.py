@@ -30,7 +30,8 @@ app.add_middleware(
 )
 
 class PromptRequest(BaseModel):
-    prompt: str
+    prompt: str = ""
+    vision: str = ""
 
 class PosterRequest(BaseModel):
     prompt: str
@@ -68,7 +69,12 @@ def brand_identity(req: BrandRequest):
 @app.post("/generate")
 def generate(req: PromptRequest):
     try:
-        event_json = generate_event_data(req.prompt)
+        # Use whichever one is provided
+        prompt_to_use = req.prompt if req.prompt else req.vision
+        if not prompt_to_use:
+            raise ValueError("No prompt or vision provided in request.")
+
+        event_json = generate_event_data(prompt_to_use)
         workspace_url = create_event_workspace(event_json)
         pptx_path = generate_pitch_deck(event_json)
 

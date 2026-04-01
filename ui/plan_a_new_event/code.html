@@ -251,7 +251,7 @@
         localStorage.removeItem('eventForgeBrandIdentity');
         window.location.href = '../event_detail_view_connected/code.html';
       } else {
-        alert('Generation failed, please try again. ' + (data.errors ? data.errors.join(', ') : ''));
+        alert('Generation failed: ' + (data.message || 'Unknown error'));
       }
     } catch (e) {
       alert('Error connecting to backend: ' + e.message);
