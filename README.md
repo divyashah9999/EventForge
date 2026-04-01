@@ -2,6 +2,10 @@
 
 **EventForge** is a comprehensive, end-to-end automation platform designed for modern event organizers. It transforms a single natural language prompt into a fully interactive Notion project workspace, a professional PPTX pitch deck, and a complete brand identity—all in under 30 seconds.
 
+## 🔗 Live Output Demos
+*   **[View a Generated Notion Event Workspace (Live Demo)]()** *(<-- Paste your public Notion link here!)*
+*   **[Watch the Pitch Deck Generation Video]()** *(<-- Paste a YouTube/Drive link of your demo here!)*
+
 ---
 
 ## 💡 The Problem We're Solving
