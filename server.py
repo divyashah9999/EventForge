@@ -67,21 +67,28 @@ def brand_identity(req: BrandRequest):
 
 @app.post("/generate")
 def generate(req: PromptRequest):
-    event_json = generate_event_data(req.prompt)
-    workspace_url = create_event_workspace(event_json)
-    pptx_path = generate_pitch_deck(event_json)
+    try:
+        event_json = generate_event_data(req.prompt)
+        workspace_url = create_event_workspace(event_json)
+        pptx_path = generate_pitch_deck(event_json)
 
-    # Move the file to the dedicated directory
-    final_filename = os.path.basename(pptx_path)
-    final_path = os.path.join(GENERATED_DIR, final_filename)
-    shutil.move(pptx_path, final_path)
+        # Move the file to the dedicated directory
+        final_filename = os.path.basename(pptx_path)
+        final_path = os.path.join(GENERATED_DIR, final_filename)
+        shutil.move(pptx_path, final_path)
 
-    return {
-        "status": "success",
-        "workspace_url": workspace_url,
-        "pptx_filename": final_filename,
-        "event_data": event_json
-    }
+        return {
+            "status": "success",
+            "workspace_url": workspace_url,
+            "pptx_filename": final_filename,
+            "event_data": event_json
+        }
+    except Exception as e:
+        print(f"❌ SERVER ERROR: {str(e)}")
+        return {
+            "status": "error", 
+            "message": f"Generation failed: {str(e)}"
+        }
 
 @app.get("/download/{filename}")
 def download_pptx(filename: str):
