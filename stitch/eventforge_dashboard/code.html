@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EventForge Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-container": "#644039",
+                        "on-surface": "#393834",
+                        "on-secondary-fixed": "#374325",
+                        "surface-dim": "#e6e2db",
+                        "inverse-on-surface": "#9f9c9a",
+                        "primary-fixed-dim": "#d6d4d1",
+                        "on-primary-fixed": "#403f3d",
+                        "surface": "#fffbff",
+                        "error": "#a54731",
+                        "on-background": "#393834",
+                        "secondary-fixed": "#dae8be",
+                        "tertiary-fixed-dim": "#eebbb1",
+                        "surface-container-highest": "#ece8e1",
+                        "inverse-surface": "#0f0e0d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fffbff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#f1ede8",
+                        "tertiary": "#835a53",
+                        "on-primary": "#faf7f4",
+                        "surface-container-low": "#fdf9f5",
+                        "on-primary-container": "#52524f",
+                        "surface-tint": "#5f5e5c",
+                        "primary-container": "#e5e2df",
+                        "on-surface-variant": "#66645f",
+                        "error-container": "#fe8b70",
+                        "on-secondary-fixed-variant": "#53603f",
+                        "on-primary-fixed-variant": "#5c5b59",
+                        "on-tertiary-fixed": "#4f2d27",
+                        "tertiary-container": "#fdc8bf",
+                        "on-error-container": "#742410",
+                        "secondary": "#5c6947",
+                        "outline": "#83807b",
+                        "tertiary-dim": "#754f47",
+                        "on-tertiary-fixed-variant": "#6f4942",
+                        "primary-dim": "#535250",
+                        "tertiary-fixed": "#fdc8bf",
+                        "secondary-container": "#dae8be",
+                        "secondary-fixed-dim": "#cbdab0",
+                        "primary": "#5f5e5c",
+                        "inverse-primary": "#ffffff",
+                        "surface-container": "#f7f3ee",
+                        "background": "#fffbff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#4a5636",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#bcb9b3",
+                        "primary-fixed": "#e5e2df",
+                        "secondary-dim": "#505d3c",
+                        "surface-variant": "#ece8e1",
+                        "error-dim": "#5c1202"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>body {
+    background: linear-gradient(135deg, #fdf9f5 0%, #ece8e1 100%);
+    min-height: 100vh;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: #393834
+    }
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    opacity: 0.03;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCsxZ4shErH_OagKYLAyOlttQ-IDuzK_sbVpMEJzYIw9d9UaYPQQubBwF3A9U2yhfzBYK6OZiWNjSwgVXNLMmgk3q6EEfGnoxX4iLA1y8dXJ5kMzOZVdTDZeOSAaBwQh1Av3ftPjJeitep-Fz6G9VmWifmEdJrrMjTr2_Hra3aeBOXoDPP8dEiP3MeoZOW7WbGLraOakW5hyi-sJtiDytlsL1V17oUWeNzcYREXYLZX9rFWywInKPT2FN0u8P4aAVKWU48C2mObCShS)
+    }
+.glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 1.25rem;
+    /* 20px */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out
+    }
+.glass-card:hover {
+    transform: translatey(-2px);
+    box-shadow: 0 12px 32px rgba(44, 44, 42, 0.12)
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }</style>
+</head>
+<body class="bg-surface">
+<div class="noise-overlay"></div>
+<!-- Navigation Shell (Desktop SideNav) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-white/20 bg-[#F5F0EB]/40 backdrop-blur-md z-40 flex flex-col py-8 px-6 space-y-8 font-headline tracking-wide text-[#2C2C2A]">
+<div class="flex items-center gap-2 text-2xl font-bold tracking-tighter text-[#2C2C2A]">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">fluid</span>
+<span>EventForge</span>
+</div>
+<nav class="flex-1 space-y-2 mt-8">
+<a class="flex items-center gap-3 px-4 py-3 bg-white/30 backdrop-blur-sm rounded-xl text-[#2C2C2A] font-semibold transition-all duration-300 ease-out hover:translate-x-1" href="../eventforge_dashboard/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#83807B] hover:text-[#5F5E5C] transition-all duration-300 ease-out hover:translate-x-1" href="../plan_a_new_event/code.html">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-sm">New Event</span>
+</a>
+</nav>
+<div class="pt-8 mt-auto border-t border-white/10 space-y-4">
+<button class="w-full bg-primary text-on-primary py-3 rounded-full font-semibold text-sm shadow-sm hover:translate-y-[-1px] active:scale-95 transition-all" onclick="window.location.href='../plan_a_new_event/code.html'">
+                Create Event
+            </button>
+<div class="flex items-center gap-3 px-4 py-2 text-[#83807B] hover:text-[#5F5E5C] cursor-pointer transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-sm">Profile</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 relative z-10 min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full h-16 sticky top-0 z-30 flex justify-between items-center px-12 bg-transparent backdrop-blur-sm">
+<div class="flex items-center gap-2">
+<!-- Empty for alignment with SideNav text -->
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-surface-container-lowest/40 backdrop-blur-md border-none focus:ring-1 focus:ring-secondary-fixed text-sm pl-10 pr-4 py-2 rounded-full w-64 transition-all outline-none" placeholder="Search events..." type="text"/>
+</div>
+<button class="text-primary-dim hover:opacity-100 transition-opacity font-headline font-medium text-sm">New Project</button>
+<img alt="User Avatar" class="w-8 h-8 rounded-full border border-white/40 shadow-sm" data-alt="Close up portrait of a young professional with short dark hair in a minimal bright office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz3hcAVZKlhn33RKm6LvXgMhdEz1XpUcz3falePEWR4AlGejXFn29NBB9o_LNSVvMaG5Tc7_HD6k3BpqEKJh1MrTJHa7vHKMk8Ba1h0JfkXv4fl9GDpZFoyUYLGQqknfMs1hSNdyu7ImHVKdDE6n7U2PGZjdmDt2O8AtWcu6MS86dXWeIPf-DsT_gU5HDRwXG-Iey628Z_e5DoT_rg3eAzRfm23e3UizsiVQq9ygaiaKKpunHJnVHtjp_S-p5kllp8iRLq6hgtm0a0"/>
+</div>
+</header>
+<div class="px-12 py-12 max-w-7xl mx-auto space-y-16">
+<!-- Hero Header -->
+<section class="space-y-1">
+<h1 class="text-4xl font-extrabold tracking-tight font-headline text-[#2C2C2A]">Welcome back, Aryan</h1>
+<p class="text-outline font-medium tracking-wide">Friday, May 24th, 2025</p>
+</section>
+<!-- Metric Cards -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glass-card p-8 shadow-[0_4px_24px_rgba(44,44,42,0.08)] flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="text-outline font-label text-xs uppercase tracking-widest">Active Events</span>
+<span class="material-symbols-outlined text-secondary">analytics</span>
+</div>
+<div class="text-5xl font-bold font-headline text-[#2C2C2A]">2</div>
+</div>
+<div class="glass-card p-8 shadow-[0_4px_24px_rgba(44,44,42,0.08)] flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="text-outline font-label text-xs uppercase tracking-widest">Tasks Pending</span>
+<span class="material-symbols-outlined text-tertiary">assignment_late</span>
+</div>
+<div class="text-5xl font-bold font-headline text-[#2C2C2A]">5</div>
+</div>
+<div class="glass-card p-8 shadow-[0_4px_24px_rgba(44,44,42,0.08)] flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="text-outline font-label text-xs uppercase tracking-widest">Notion Workspaces</span>
+<span class="material-symbols-outlined text-primary">dynamic_feed</span>
+</div>
+<div class="text-5xl font-bold font-headline text-[#2C2C2A]">2</div>
+</div>
+</section>
+<!-- Recent Events Section -->
+<section class="space-y-8">
+<div class="flex justify-between items-end">
+<h2 class="text-2xl font-bold font-headline text-[#2C2C2A]">RECENT EVENTS</h2>
+<a class="text-sm font-semibold text-primary-dim hover:underline underline-offset-4 transition-all" href="#">View all events</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<!-- Event Card 1 -->
+<div class="glass-card overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden relative">
+<img alt="Cyberpunk hackathon setup" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" data-alt="High-tech futuristic dark room with neon light accents, glowing monitors, and ergonomic workstations in a minimal composition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqjDHztWILbO5ntBb8DysmgXFrAHVD05zN6mdFY6AYEkIgQfSpDxidKw0QYOWg_wFlUsX7gfCrSCnmchhyzHRuW19Eq75iw9Y0uAFi3-uLSLJnTC95LKx-89fb1ZJi0jB86m0dWdw-45ux1wS8MmVnmhx66JkZ1trlb6USnje2N9Ti9Un1uFsCGNHgp1DueCpdej8Qyi_IvY6-dTFyVh4I8PZTWgc8ILQ0Mce0k4eGvLI1jTyJdUP_UiCsagxR9lt6jQhVMTRqbByR"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold tracking-tight">In Progress</span>
+</div>
+</div>
+<div class="p-8 space-y-4">
+<h3 class="text-xl font-bold font-headline text-[#2C2C2A]">MSIT Web3 Hackathon 2025</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Global student hackathon focusing on decentralized infrastructure and smart contract safety.</p>
+<div class="pt-4">
+<a class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all" href="../event_detail_view_connected/code.html">
+                                    View Workspace <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="glass-card overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden relative">
+<img alt="Event stage lights" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" data-alt="Warm atmospheric stage lighting with a soft bokeh effect and silhouette of a modern minimalist podium" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGBk45sNhKwINXrdlgddrhoW73Q6ir8iL3XbriebBASe5AdxkIu42JV3vaaBQ33FnE5QBRgJ630s5AihDHNW_sE-4HHSLeQwqA9xNEN_KuIT4AgT28DOWkHhADratqW1NT_c10omqEFDGvVE_Rxw3ewfbN3PJUusQTd0iNfj1pwJ7Ihgw0IeehHWgZbAsN7K-5uAaKuD1sEftWfPtqAET3oDUTCu00HV0JO41rX2S_Gfo7DlKW0VMLhsNfmunnZQqvNZ6HkqS_IJHg"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold tracking-tight">Planning</span>
+</div>
+</div>
+<div class="p-8 space-y-4">
+<h3 class="text-xl font-bold font-headline text-[#2C2C2A]">Design Artisans Meetup</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">A gathering of digital curators and product designers focused on tactile ethereal aesthetics.</p>
+<div class="pt-4">
+<a class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all" href="../event_detail_view_connected/code.html">
+                                    View Workspace <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Activity Section (Bento Grid Style) -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
+<div class="lg:col-span-2 glass-card p-8 flex flex-col justify-between">
+<div>
+<h3 class="text-lg font-bold font-headline mb-4">Upcoming Tasks</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-white/10 rounded-xl">
+<div class="flex items-center gap-4">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-sm font-medium">Finalize venue for Hackathon</span>
+</div>
+<span class="text-xs text-outline">Today</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-white/10 rounded-xl">
+<div class="flex items-center gap-4">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-sm font-medium">Review sponsor proposals</span>
+</div>
+<span class="text-xs text-outline">Tomorrow</span>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card p-8 bg-primary/5">
+<h3 class="text-lg font-bold font-headline mb-6">Quick Actions</h3>
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between p-4 glass-card bg-white/40 border-none text-left hover:bg-white/60 transition-colors">
+<span class="text-sm font-semibold">New Notion Doc</span>
+<span class="material-symbols-outlined text-outline">note_add</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 glass-card bg-white/40 border-none text-left hover:bg-white/60 transition-colors">
+<span class="text-sm font-semibold">Invite Team</span>
+<span class="material-symbols-outlined text-outline">group_add</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- FAB for Create (Mobile/Tablet accessibility) -->
+<div class="md:hidden fixed bottom-6 right-6 z-50">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</body></html>

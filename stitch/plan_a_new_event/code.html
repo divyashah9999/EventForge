@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary-container": "#644039",
+            "on-surface": "#393834",
+            "on-secondary-fixed": "#374325",
+            "surface-dim": "#e6e2db",
+            "inverse-on-surface": "#9f9c9a",
+            "primary-fixed-dim": "#d6d4d1",
+            "on-primary-fixed": "#403f3d",
+            "surface": "#fffbff",
+            "error": "#a54731",
+            "on-background": "#393834",
+            "secondary-fixed": "#dae8be",
+            "tertiary-fixed-dim": "#eebbb1",
+            "surface-container-highest": "#ece8e1",
+            "inverse-surface": "#0f0e0d",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#fffbff",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#f1ede8",
+            "tertiary": "#835a53",
+            "on-primary": "#faf7f4",
+            "surface-container-low": "#fdf9f5",
+            "on-primary-container": "#52524f",
+            "surface-tint": "#5f5e5c",
+            "primary-container": "#e5e2df",
+            "on-surface-variant": "#66645f",
+            "error-container": "#fe8b70",
+            "on-secondary-fixed-variant": "#53603f",
+            "on-primary-fixed-variant": "#5c5b59",
+            "on-tertiary-fixed": "#4f2d27",
+            "tertiary-container": "#fdc8bf",
+            "on-error-container": "#742410",
+            "secondary": "#5c6947",
+            "outline": "#83807b",
+            "tertiary-dim": "#754f47",
+            "on-tertiary-fixed-variant": "#6f4942",
+            "primary-dim": "#535250",
+            "tertiary-fixed": "#fdc8bf",
+            "secondary-container": "#dae8be",
+            "secondary-fixed-dim": "#cbdab0",
+            "primary": "#5f5e5c",
+            "inverse-primary": "#ffffff",
+            "surface-container": "#f7f3ee",
+            "background": "#fffbff",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#4a5636",
+            "on-error": "#ffffff",
+            "outline-variant": "#bcb9b3",
+            "primary-fixed": "#e5e2df",
+            "secondary-dim": "#505d3c",
+            "surface-variant": "#ece8e1",
+            "error-dim": "#5c1202"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Plus Jakarta Sans"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background: linear-gradient(135deg, #FDC8BF 0%, #FFFBFB 40%, #FFFBFB 60%, #F5F0EB 100%);
+      background-attachment: fixed;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+    .frosted-textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(218, 232, 190, 0.4);
+    }
+  </style>
+</head>
+<body class="text-on-surface">
+<div class="grain-overlay"></div>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-white/20 bg-[#F5F0EB]/40 backdrop-blur-md dark:bg-[#2C2C2A]/40 flex flex-col py-8 px-6 space-y-8 z-40 shadow-[0_4px_24px_rgba(44,44,42,0.08)]">
+<div class="text-2xl font-bold tracking-tighter text-[#2C2C2A] dark:text-[#FAF7F4] flex items-center gap-2 font-['Manrope']">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+      EventForge
+    </div>
+<nav class="flex-1 flex flex-col space-y-2">
+<a href="../eventforge_dashboard/code.html" class="flex items-center gap-3 py-3 px-4 text-[#83807B] hover:text-[#5F5E5C] dark:text-[#FAF7F4]/60 hover:translate-x-1 transition-all duration-300 ease-out cursor-pointer font-['Manrope'] tracking-wide">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- ACTIVE TAB: New Event -->
+<a href="../plan_a_new_event/code.html" class="flex items-center gap-3 py-3 px-4 bg-white/30 dark:bg-black/20 backdrop-blur-sm rounded-xl text-[#2C2C2A] font-semibold scale-[0.98] active:scale-95 transition-transform font-['Manrope'] tracking-wide">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span>New Event</span>
+</a>
+</nav>
+<div class="pt-8 border-t border-white/10 space-y-4">
+<div class="flex items-center gap-3 px-4 py-2 text-[#83807B] hover:text-[#5F5E5C] cursor-pointer">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-['Manrope'] text-sm tracking-wide">Profile</span>
+</div>
+<div class="bg-primary px-4 py-3 rounded-xl text-on-primary text-center font-bold text-sm tracking-widest cursor-pointer shadow-lg hover:scale-105 transition-transform">
+        Create Event
+      </div>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="w-full h-16 sticky top-0 z-30 flex justify-between items-center pl-72 pr-12 bg-transparent font-['Manrope'] font-medium text-sm">
+<div class="flex items-center gap-2">
+<!-- Empty space to align right search -->
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-sm" data-icon="search">search</span>
+<input class="bg-white/20 backdrop-blur-md border-none rounded-full pl-10 pr-4 py-1.5 w-64 focus:ring-2 focus:ring-secondary-fixed text-on-surface placeholder:text-outline transition-all" placeholder="Search events..." type="text"/>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/40 shadow-sm">
+<img alt="User profile avatar" data-alt="close-up portrait of a professional woman with a soft smile in a bright airy studio environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_EdzifyLjVnV2HuB8QGXp-7q94q_9Ifj6OSrAJ19LPB8a2uQ1-VYyZOQ8NRRGaXXnZH00ZyydzbbOuIfirBblr5LOIhnrvBGrUrXh94HIiPAXCwAmPyyXkP4UA8PL1CrsFl8awJ5vzdqQWFJHGhcHsFC7668xg_kgkMRVgVkZD3hVWCbnsxZv7Uo2bqWJUfVpjHxqSwv6sYoB26-TIfnGNXQUvKupSLSg2PauA10fvCBDeZT2R_EusglyWlNgY70lsUUnyk_Hd48Y"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 p-12 min-h-[calc(100vh-64px)] relative z-10 flex flex-col items-center">
+<div class="max-w-4xl w-full space-y-12">
+<!-- Heading Section -->
+<section class="text-center space-y-4">
+<h1 class="text-5xl font-extrabold font-headline tracking-tighter text-on-surface">
+          Plan a New Event
+        </h1>
+<p class="text-lg text-outline font-body max-w-xl mx-auto">
+          Describe your event and EventForge will generate the full plan.
+        </p>
+</section>
+<!-- Event Designer Card -->
+<div class="relative bg-white/25 backdrop-blur-[16px] rounded-[2rem] p-10 shadow-[0_4px_24px_rgba(44,44,42,0.08)] overflow-hidden">
+<!-- Subtle decorative texture background within card -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-tertiary-fixed opacity-10 rounded-full blur-[80px] -mr-32 -mt-32"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary-fixed opacity-10 rounded-full blur-[80px] -ml-32 -mb-32"></div>
+<div class="relative space-y-8">
+<!-- Main Input -->
+<div class="space-y-4">
+<label class="block text-sm font-bold tracking-widest text-primary uppercase ml-1">The Vision</label>
+<div class="relative">
+<textarea id="event-prompt" class="frosted-textarea w-full h-64 bg-surface-container-lowest/40 backdrop-blur-[8px] rounded-2xl p-8 text-xl font-body border-none resize-none placeholder:text-outline/50 transition-all leading-relaxed" placeholder="Describe your event — type, audience, duration, goals..."></textarea>
+<div class="absolute bottom-6 right-8 text-outline/40 text-sm">
+                Min. 50 words recommended
+              </div>
+</div>
+</div>
+<!-- Quick Fill Chips -->
+<div class="space-y-4">
+<span class="text-xs font-semibold text-outline tracking-wider block ml-1">QUICK START TEMPLATES</span>
+<div class="flex flex-wrap gap-3">
+<button class="px-6 py-2 rounded-full bg-white/30 backdrop-blur-md border border-[#2C2C2A]/10 text-on-surface text-sm font-medium hover:bg-white/50 transition-all active:scale-95">Hackathon</button>
+<button class="px-6 py-2 rounded-full bg-white/30 backdrop-blur-md border border-[#2C2C2A]/10 text-on-surface text-sm font-medium hover:bg-white/50 transition-all active:scale-95">Workshop</button>
+<button class="px-6 py-2 rounded-full bg-white/30 backdrop-blur-md border border-[#2C2C2A]/10 text-on-surface text-sm font-medium hover:bg-white/50 transition-all active:scale-95">Conference</button>
+<button class="px-6 py-2 rounded-full bg-white/30 backdrop-blur-md border border-[#2C2C2A]/10 text-on-surface text-sm font-medium hover:bg-white/50 transition-all active:scale-95">Networking Night</button>
+<button class="px-6 py-2 rounded-full bg-white/30 backdrop-blur-md border border-[#2C2C2A]/10 text-on-surface text-sm font-medium hover:bg-white/50 transition-all active:scale-95">College Fest</button>
+</div>
+</div>
+<!-- Action Section -->
+<div class="pt-6 flex flex-col items-center gap-6">
+<button id="generate-button" class="group relative px-12 py-5 bg-primary text-on-primary rounded-full font-headline font-bold text-lg shadow-xl hover:bg-primary-dim hover:scale-105 active:scale-95 transition-all flex items-center gap-3">
+              <span id="generate-text">Generate Event Plan</span>
+              <span id="generate-icon" class="material-symbols-outlined group-hover:translate-x-2 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<p class="text-xs text-outline font-body italic">
+              EventForge will create a Notion workspace and pitch deck automatically.
+            </p>
+</div>
+</div>
+</div>
+<!-- Feature Teasers (Bento Light) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
+<div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 space-y-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+</div>
+<h3 class="font-headline font-bold text-on-surface">Full Logic Tree</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed">Automated logistics, vendor mapping, and contingency paths for every scenario.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 space-y-3">
+<div class="w-10 h-10 rounded-xl bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined" data-icon="brush">brush</span>
+</div>
+<h3 class="font-headline font-bold text-on-surface">Brand Identity</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed">Instant deck design with custom color palettes tailored to your event's mood.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 space-y-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="share_windows">share_windows</span>
+</div>
+<h3 class="font-headline font-bold text-on-surface">Ready-to-Ship</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed">Direct export to Notion, Slack, and Google Drive for immediate team alignment.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Ambient Light Sources -->
+<div class="fixed top-0 left-0 w-[500px] h-[500px] bg-tertiary-fixed/20 blur-[120px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+<div class="fixed bottom-0 right-0 w-[400px] h-[400px] bg-secondary-fixed/20 blur-[100px] rounded-full translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
+<script>
+  document.getElementById('generate-button').addEventListener('click', async () => {
+    const promptText = document.getElementById('event-prompt').value;
+    if (!promptText.trim()) return alert("Please enter a description for your event.");
+
+    const btn = document.getElementById('generate-button');
+    const btnText = document.getElementById('generate-text');
+    const btnIcon = document.getElementById('generate-icon');
+    
+    btn.disabled = true;
+    const oldText = btnText.innerText;
+    btnText.innerText = 'Forging Your Event...';
+    btnIcon.innerText = 'hourglass_empty';
+    btnIcon.classList.add('animate-spin');
+
+    try {
+      const response = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptText })
+      });
+      const data = await response.json();
+      if (data.status === 'success') {
+        localStorage.setItem('eventForgeData', JSON.stringify(data));
+        localStorage.setItem('eventForgePrompt', promptText);
+        localStorage.removeItem('eventForgePosterConcepts');
+        localStorage.removeItem('eventForgeSelectedVibe');
+        localStorage.removeItem('eventForgeBrandIdentity');
+        window.location.href = '../event_detail_view_connected/code.html';
+      } else {
+        alert('Generation failed, please try again. ' + (data.errors ? data.errors.join(', ') : ''));
+      }
+    } catch (e) {
+      alert('Error connecting to backend: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btnText.innerText = oldText;
+      btnIcon.innerText = 'arrow_forward';
+      btnIcon.classList.remove('animate-spin');
+    }
+  });
+
+  // Quick fill templates
+  document.querySelectorAll('button.px-6.py-2.rounded-full').forEach(btn => {
+    if (btn.id !== 'generate-button' && !btn.closest('aside')) {
+        btn.addEventListener('click', (e) => {
+            const current = document.getElementById('event-prompt').value;
+            document.getElementById('event-prompt').value = current ? current + " " + e.target.innerText : "A " + e.target.innerText + " for ";
+        });
+    }
+  });
+</script>
+</body></html>

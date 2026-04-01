@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary-container": "#644039",
+            "on-surface": "#393834",
+            "on-secondary-fixed": "#374325",
+            "surface-dim": "#e6e2db",
+            "inverse-on-surface": "#9f9c9a",
+            "primary-fixed-dim": "#d6d4d1",
+            "on-primary-fixed": "#403f3d",
+            "surface": "#fffbff",
+            "error": "#a54731",
+            "on-background": "#393834",
+            "secondary-fixed": "#dae8be",
+            "tertiary-fixed-dim": "#eebbb1",
+            "surface-container-highest": "#ece8e1",
+            "inverse-surface": "#0f0e0d",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#fffbff",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#f1ede8",
+            "tertiary": "#835a53",
+            "on-primary": "#faf7f4",
+            "surface-container-low": "#fdf9f5",
+            "on-primary-container": "#52524f",
+            "surface-tint": "#5f5e5c",
+            "primary-container": "#e5e2df",
+            "on-surface-variant": "#66645f",
+            "error-container": "#fe8b70",
+            "on-secondary-fixed-variant": "#53603f",
+            "on-primary-fixed-variant": "#5c5b59",
+            "on-tertiary-fixed": "#4f2d27",
+            "tertiary-container": "#fdc8bf",
+            "on-error-container": "#742410",
+            "secondary": "#5c6947",
+            "outline": "#83807b",
+            "tertiary-dim": "#754f47",
+            "on-tertiary-fixed-variant": "#6f4942",
+            "primary-dim": "#535250",
+            "tertiary-fixed": "#fdc8bf",
+            "secondary-container": "#dae8be",
+            "secondary-fixed-dim": "#cbdab0",
+            "primary": "#5f5e5c",
+            "inverse-primary": "#ffffff",
+            "surface-container": "#f7f3ee",
+            "background": "#fffbff",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#4a5636",
+            "on-error": "#ffffff",
+            "outline-variant": "#bcb9b3",
+            "primary-fixed": "#e5e2df",
+            "secondary-dim": "#505d3c",
+            "surface-variant": "#ece8e1",
+            "error-dim": "#5c1202",
+            // Dynamic theme mappings
+            "dept-logistics": "#cbdab0", // Sage
+            "on-dept-logistics": "#374325",
+            "dept-pr": "#eebbb1", // Dusty Rose
+            "on-dept-pr": "#4f2d27",
+            "dept-tech": "#a5c3e6", // Muted Blue (Manual add)
+            "on-dept-tech": "#1a2c42",
+            "dept-design": "#f4c787", // Warm Amber (Manual add)
+            "on-dept-design": "#5c3d14"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Plus Jakarta Sans"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.25rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #FDF9F5 0%, #F5F0EB 100%);
+      position: relative;
+    }
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.03;
+      z-index: 50;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 24px rgba(44, 44, 42, 0.08);
+      transition: transform 0.3s ease-out;
+    }
+    .glass-card:hover {
+      transform: translateY(-2px);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="text-on-surface min-h-screen">
+<div class="noise-overlay"></div>
+<!-- Side Navigation Bar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-white/20 bg-[#F5F0EB]/40 backdrop-blur-md dark:bg-[#2C2C2A]/40 flex flex-col py-8 px-6 space-y-8 z-40">
+<div class="flex items-center gap-2 text-2xl font-bold tracking-tighter text-[#2C2C2A] dark:text-[#FAF7F4] font-headline">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+      EventForge
+    </div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#83807B] hover:text-[#5F5E5C] dark:text-[#FAF7F4]/60 hover:translate-x-1 transition-all duration-300 ease-out" href="../eventforge_dashboard/code.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Manrope'] tracking-wide">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#83807B] hover:text-[#5F5E5C] dark:text-[#FAF7F4]/60 hover:translate-x-1 transition-all duration-300 ease-out" href="../plan_a_new_event/code.html">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="font-['Manrope'] tracking-wide">New Event</span>
+</a>
+</nav>
+<div class="mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-[#83807B] hover:text-[#5F5E5C] dark:text-[#FAF7F4]/60 hover:translate-x-1 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-['Manrope'] tracking-wide">Profile</span>
+</a>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="w-full h-16 sticky top-0 z-30 flex justify-between items-center pl-72 pr-12 bg-transparent">
+<div class="flex items-center gap-4">
+<a href="../eventforge_dashboard/code.html" class="flex items-center text-outline hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</a>
+<span class="text-xs font-bold tracking-widest text-outline uppercase">Project / Event Details</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant/20">
+<span class="material-symbols-outlined text-outline text-lg" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 font-body" placeholder="Search event data..." type="text"/>
+</div>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-white/40">
+<img class="w-full h-full object-cover" data-alt="close-up portrait of a professional woman with soft natural lighting and minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0_cBRRo_GkbDhVRWwTgk1skoD0zc_rrYWDqY722pPP5DOQH-Ygn8GYd68GRFvv3U0kw8lIS5Xd6-r5vYL6BrSTRDEYqmoOrF2vemy7K4rFir12n7LHfgHqwyJH02-NdCbkIX0Bcnke1VJf3lnlSuFvjM0vD6m78C514tuO1qTQAxXTbMA4-ibRxYQNbY2v5d5vjYoh9hekoxHXelfowjKt-SoJXCqUvPJM8KDu30FMbw92L3OdyQJUN-eN1rC1zCSN9Cgb6F2xsdI"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-72 pr-12 pb-20 pt-8 max-w-7xl">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h1 class="text-5xl font-extrabold tracking-tight text-on-surface font-headline mb-2">MSIT Web3 Hackathon 2025</h1>
+<p class="text-outline text-lg font-body italic">Annual flagship decentralization marathon focusing on sustainable on-chain architecture.</p>
+</div>
+<div class="flex gap-4 mb-1">
+<a class="px-6 py-2.5 rounded-full border border-primary text-primary font-medium text-sm hover:bg-primary/5 transition-colors flex items-center gap-2" href="https://notion.so/event-workspace">
+          Open Notion Workspace <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-medium text-sm hover:bg-primary-dim transition-transform active:scale-95 shadow-sm" href="https://api.eventforge.com/download/msit_web3_hackathon_pitch.pptx">
+          Download Pitch Deck
+        </a>
+</div>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-2 gap-8">
+<!-- Section 1: Timeline -->
+<section class="glass-card rounded-[20px] p-8">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<h2 class="text-xl font-bold font-headline text-on-surface">Timeline</h2>
+</div>
+<div class="space-y-6 relative ml-4">
+<!-- Timeline Line -->
+<div class="absolute left-[-1.15rem] top-2 bottom-2 w-px bg-outline-variant/30"></div>
+<div class="relative">
+<div class="absolute left-[-1.45rem] top-1.5 w-2.5 h-2.5 rounded-full bg-primary border-2 border-surface"></div>
+<p class="text-xs font-bold text-outline tracking-wider uppercase mb-1">09:00 AM</p>
+<p class="text-on-surface font-semibold font-body">Registration &amp; Breakfast</p>
+<p class="text-outline text-sm">Grand Atrium Hall</p>
+</div>
+<div class="relative">
+<div class="absolute left-[-1.45rem] top-1.5 w-2.5 h-2.5 rounded-full bg-outline-variant border-2 border-surface"></div>
+<p class="text-xs font-bold text-outline tracking-wider uppercase mb-1">10:30 AM</p>
+<p class="text-on-surface font-semibold font-body">Keynote: Future of Web3</p>
+<p class="text-outline text-sm">Auditorium A</p>
+</div>
+<div class="relative">
+<div class="absolute left-[-1.45rem] top-1.5 w-2.5 h-2.5 rounded-full bg-outline-variant border-2 border-surface"></div>
+<p class="text-xs font-bold text-outline tracking-wider uppercase mb-1">01:00 PM</p>
+<p class="text-on-surface font-semibold font-body">Hacking Session Alpha</p>
+<p class="text-outline text-sm">Developer Lounges</p>
+</div>
+<div class="relative">
+<div class="absolute left-[-1.45rem] top-1.5 w-2.5 h-2.5 rounded-full bg-outline-variant border-2 border-surface"></div>
+<p class="text-xs font-bold text-outline tracking-wider uppercase mb-1">07:00 PM</p>
+<p class="text-on-surface font-semibold font-body">Networking Mixer</p>
+<p class="text-outline text-sm">Terrace Garden</p>
+</div>
+</div>
+</section>
+<!-- Section 2: PR Messages -->
+<section class="glass-card rounded-[20px] p-8">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-xl bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+</div>
+<h2 class="text-xl font-bold font-headline text-on-surface">PR Messages</h2>
+</div>
+<ul class="space-y-4">
+<li class="p-4 rounded-2xl bg-white/40 border border-white/20 flex gap-4">
+<span class="text-tertiary font-bold text-lg leading-none">•</span>
+<p class="text-on-surface-variant leading-relaxed text-sm">Positioning this hackathon as the bridge between traditional academia and the decentralized economy.</p>
+</li>
+<li class="p-4 rounded-2xl bg-white/40 border border-white/20 flex gap-4">
+<span class="text-tertiary font-bold text-lg leading-none">•</span>
+<p class="text-on-surface-variant leading-relaxed text-sm">Emphasis on zero-knowledge proofs as the core theme for the 2025 innovation track.</p>
+</li>
+<li class="p-4 rounded-2xl bg-white/40 border border-white/20 flex gap-4">
+<span class="text-tertiary font-bold text-lg leading-none">•</span>
+<p class="text-on-surface-variant leading-relaxed text-sm">Leveraging alumni success stories to drive higher tier-1 developer registrations.</p>
+</li>
+</ul>
+</section>
+<!-- Section 3: Tasks -->
+<section class="glass-card rounded-[20px] p-8">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+</div>
+<h2 class="text-xl font-bold font-headline text-on-surface">Tasks</h2>
+</div>
+<span class="text-xs font-semibold text-outline px-3 py-1 bg-surface-variant/50 rounded-full">3 Pending</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 rounded-2xl bg-white/30 group hover:bg-white/50 transition-colors">
+<div class="flex flex-col gap-1">
+<span class="text-on-surface font-semibold text-sm">Finalize Sponsorship PDF</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-dept-pr text-[10px] font-bold text-on-dept-pr uppercase tracking-tight">PR &amp; Media</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[10px] font-bold text-outline uppercase tracking-tighter">Done</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 rounded-2xl bg-white/30 group hover:bg-white/50 transition-colors">
+<div class="flex flex-col gap-1">
+<span class="text-on-surface font-semibold text-sm">Venue catering logistics</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-dept-logistics text-[10px] font-bold text-on-dept-logistics uppercase tracking-tight">Logistics</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="text-[10px] font-bold text-outline uppercase tracking-tighter">In Progress</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 rounded-2xl bg-white/30 group hover:bg-white/50 transition-colors">
+<div class="flex flex-col gap-1">
+<span class="text-on-surface font-semibold text-sm">Speaker onboarding docs</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-dept-pr text-[10px] font-bold text-on-dept-pr uppercase tracking-tight">PR &amp; Media</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-stone-400"></span>
+<span class="text-[10px] font-bold text-outline uppercase tracking-tighter">Not Started</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Pitch Deck -->
+<section class="glass-card rounded-[20px] p-8 flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="slideshow">slideshow</span>
+</div>
+<h2 class="text-xl font-bold font-headline text-on-surface">Pitch Deck</h2>
+</div>
+<div class="flex-1 flex flex-col">
+<div class="mb-4">
+<p class="font-bold text-on-surface text-lg">7 slides generated</p>
+<p class="text-outline text-xs">Overview of planned slide deck structure.</p>
+</div>
+<div class="space-y-2 mb-8 overflow-y-auto max-h-48 pr-2">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-white/20 text-xs">
+<span class="font-bold text-primary w-4">1</span>
+<span class="text-on-surface-variant font-medium">Title &amp; Vision Statement</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg bg-white/20 text-xs">
+<span class="font-bold text-primary w-4">2</span>
+<span class="text-on-surface-variant font-medium">Problem: Academic Fragmentation</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg bg-white/20 text-xs">
+<span class="font-bold text-primary w-4">3</span>
+<span class="text-on-surface-variant font-medium">Solution: Web3 Integration Hub</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg bg-white/20 text-xs">
+<span class="font-bold text-primary w-4">4</span>
+<span class="text-on-surface-variant font-medium">Target Audience &amp; Ecosystem</span>
+</div>
+</div>
+<button class="w-full py-3 rounded-full border border-outline-variant/30 text-primary font-bold text-sm bg-white/20 hover:bg-white/40 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+            Download Deck
+          </button>
+</div>
+</section>
+<!-- Section 5: Logistics (New) -->
+<section class="glass-card rounded-[20px] p-8 col-span-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<h2 class="text-xl font-bold font-headline text-on-surface">Logistics: Budget Table</h2>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/20">
+<th class="py-3 px-4 text-xs font-bold text-outline uppercase tracking-wider">Item</th>
+<th class="py-3 px-4 text-xs font-bold text-outline uppercase tracking-wider text-right">Estimate ($)</th>
+</tr>
+</thead>
+<tbody class="text-sm font-body">
+<tr class="border-b border-outline-variant/10">
+<td class="py-3 px-4 text-on-surface font-medium">Venue Rental (3 days)</td>
+<td class="py-3 px-4 text-on-surface text-right">$4,500.00</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="py-3 px-4 text-on-surface font-medium">Catering &amp; Refreshments</td>
+<td class="py-3 px-4 text-on-surface text-right">$3,200.00</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="py-3 px-4 text-on-surface font-medium">Prizes &amp; Grants</td>
+<td class="py-3 px-4 text-on-surface text-right">$10,000.00</td>
+</tr>
+<tr>
+<td class="py-3 px-4 text-on-surface font-medium">Marketing &amp; Merch</td>
+<td class="py-3 px-4 text-on-surface text-right">$2,100.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+
+
+<!-- POSTER VIBE SELECTOR SECTION -->
+<div id="poster-section" style="display:none; margin-top: 4rem;">
+  
+  <h2 style="color: #2C2C2A; font-size: 20px; font-weight: 700; font-family: 'Outfit', sans-serif; margin-bottom: 4px;">
+    Choose Your Event Vibe
+  </h2>
+  <p style="color: #83807B; font-size: 14px; margin-bottom: 1.5rem; font-family: 'Manrope', sans-serif;">
+    Select the poster concept that best represents your event
+  </p>
+
+  <div id="vibe-cards-grid" style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  "></div>
+
+  <button id="confirm-vibe-btn" onclick="confirmVibe()" style="
+    display: none;
+    background: #2C2C2A;
+    color: #FAF7F2;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  ">Generate Brand Identity →</button>
+
+</div>
+
+<!-- BRAND IDENTITY PANEL -->
+<div id="brand-section" style="display:none; margin-top: 2rem;">
+
+  <h2 style="color: #2C2C2A; font-size: 20px; font-weight: 700; font-family: 'Outfit', sans-serif; margin-bottom: 4px;">
+    Brand Identity
+  </h2>
+  <p style="color: #83807B; font-size: 14px; margin-bottom: 1.5rem; font-family: 'Manrope', sans-serif;">
+    Use this to brief any designer, AI agent, or team member
+  </p>
+
+  <div id="brand-card" style="
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 2rem;
+  ">
+    <div id="brand-content"></div>
+    
+    <button onclick="copyBrandIdentity()" style="
+      margin-top: 1.5rem;
+      background: transparent;
+      border: 1px solid #2C2C2A;
+      color: #2C2C2A;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    ">Copy AI Agent Brief</button>
+  </div>
+
+</div>
+</main>
+<script>
+  const BACKEND_URL = "http://localhost:8000"; 
+  let selectedVibe = null;
+  let currentEventData = null;
+  let currentBrandIdentity = null;
+
+  async function loadPosterConcepts(prompt, eventData) {
+    currentEventData = eventData;
+    document.getElementById("poster-section").style.display = "block";
+    
+    // Check Cache
+    const cachedConcepts = localStorage.getItem('eventForgePosterConcepts');
+    if (cachedConcepts) {
+        renderVibeCards(JSON.parse(cachedConcepts));
+        const cachedIdentity = localStorage.getItem('eventForgeBrandIdentity');
+        const cachedVibe = localStorage.getItem('eventForgeSelectedVibe');
+        if (cachedVibe) {
+           selectedVibe = JSON.parse(cachedVibe);
+           selectVibeUIOnly(selectedVibe);
+           if (cachedIdentity) {
+               renderBrandIdentity(JSON.parse(cachedIdentity));
+           } else {
+               document.getElementById("confirm-vibe-btn").style.display = "inline-block";
+           }
+        }
+        return;
+    }
+
+    document.getElementById("vibe-cards-grid").innerHTML = 
+      '<p style="color:#83807B; font-size:14px; max-width: 400px; padding: 20px;" class="glass-card rounded-[20px] font-body">Generating abstract vibe concepts for your event...</p>';
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/poster-concepts`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+          localStorage.setItem('eventForgePosterConcepts', JSON.stringify(data.concepts));
+          renderVibeCards(data.concepts);
+      } else {
+          const errMsg = data.message || (data.detail && JSON.stringify(data.detail)) || 'Unknown Error';
+          document.getElementById("vibe-cards-grid").innerHTML = `<p style="color:#D4937A;">Error: ${errMsg}</p>`;
+      }
+    } catch (err) {
+      document.getElementById("vibe-cards-grid").innerHTML =
+        '<p style="color:#D4937A;">Could not load poster concepts.</p>';
+    }
+  }
+
+  function renderVibeCards(concepts) {
+    const grid = document.getElementById("vibe-cards-grid");
+    grid.innerHTML = "";
+
+    concepts.forEach(concept => {
+      const card = document.createElement("div");
+      card.id = `vibe-card-${concept.vibe_id}`;
+      card.style.cssText = `
+        background: rgba(255,255,255,0.3);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.5);
+        border-radius: 20px;
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      `;
+
+      const palette = concept.color_palette;
+      const swatchColors = Object.values(palette).slice(0, 5);
+      
+      // Select best colors for gradient
+      const c1 = swatchColors[0] || "#2C2C2A";
+      const c2 = swatchColors[1] || "#83807B";
+      const c3 = swatchColors[2] || "#D4937A";
+
+      card.innerHTML = `
+        <!-- Vibe Showcase Poster Preview -->
+        <div style="
+          aspect-ratio: 3/4;
+          border-radius: 12px;
+          margin-bottom: 1.5rem;
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(135deg, ${c1}, ${c3});
+          box-shadow: inset 0 0 100px rgba(0,0,0,0.2);
+        ">
+           <!-- Grain texture overlay -->
+           <div style="
+               position: absolute; inset: 0;
+               background-image: url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E');
+               opacity: 0.15;
+               mix-blend-mode: overlay;
+               pointer-events: none;
+           "></div>
+           
+           <div style="
+               position: absolute;
+               bottom: 0; left: 0; right: 0;
+               padding: 1.5rem;
+               background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+               color: #ffffff;
+           ">
+              <p style="font-size: 10px; text-transform:uppercase; letter-spacing:2px; font-weight:800; opacity:0.8; margin-bottom: 4px; font-family:'Manrope', sans-serif;">
+                  ${concept.vibe_name}
+              </p>
+              <h4 style="font-size: 20px; font-family:'Outfit', sans-serif; font-weight:800; line-height:1.1; margin:0; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                  ${currentEventData.title || 'Event Showcase'}
+              </h4>
+           </div>
+           
+           <div style="
+               position: absolute;
+               top: -20%; right: -20%;
+               width: 60%; height: 60%;
+               border-radius: 50%;
+               background: ${c2};
+               filter: blur(40px);
+               opacity: 0.8;
+           "></div>
+        </div>
+
+        <h3 style="color:#2C2C2A; font-family: 'Outfit', sans-serif; font-size:18px; font-weight:700; margin:0 0 6px;">
+          ${concept.vibe_name}
+        </h3>
+        <p style="color:#83807B; font-family:'Manrope', sans-serif; font-size:13px; font-weight:600; margin:0 0 0.75rem;">
+          ${concept.mood}
+        </p>
+        <p style="color:#2C2C2A; font-family:'Manrope', sans-serif; font-size:13px; line-height:1.6; margin:0 0 1rem;">
+          ${concept.poster_description}
+        </p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1rem;">
+          ${concept.visual_elements.map(el => `
+            <span style="
+              background: rgba(196,188,176,0.15);
+              border: 1px solid rgba(196,188,176,0.3);
+              color: #2C2C2A;
+              font-size: 11px;
+              font-weight: 600;
+              padding: 4px 12px;
+              border-radius: 20px;
+            ">${el}</span>
+          `).join("")}
+        </div>
+
+        <p style="color:#83807B; font-size:11px; margin:0; font-family:'Manrope', sans-serif;">
+          <strong style="color:#2C2C2A">Best for:</strong> ${concept.best_for}
+        </p>
+      `;
+
+      card.onmouseenter = () => {
+        if (selectedVibe?.vibe_id !== concept.vibe_id) {
+          card.style.transform = "translateY(-4px)";
+          card.style.boxShadow = "0 12px 24px rgba(0,0,0,0.06)";
+        }
+      };
+      card.onmouseleave = () => {
+        if (selectedVibe?.vibe_id !== concept.vibe_id) {
+          card.style.transform = "translateY(0)";
+          card.style.boxShadow = "none";
+        }
+      };
+      card.onclick = () => selectVibe(concept);
+
+      grid.appendChild(card);
+    });
+  }
+
+  function selectVibe(concept) {
+    selectVibeUIOnly(concept);
+
+    selectedVibe = concept;
+    localStorage.setItem('eventForgeSelectedVibe', JSON.stringify(concept));
+    
+    // Clear downstream cache so we can regenerate if they pick a new one
+    localStorage.removeItem('eventForgeBrandIdentity');
+    document.getElementById("brand-section").style.display = "none";
+
+    document.getElementById("confirm-vibe-btn").style.display = "inline-block";
+    document.getElementById("confirm-vibe-btn").textContent = "Generate Brand Identity →";
+  }
+
+  function selectVibeUIOnly(concept) {
+     document.querySelectorAll("[id^='vibe-card-']").forEach(el => {
+      el.style.border = "1px solid rgba(255,255,255,0.5)";
+      el.style.transform = "translateY(0)";
+      el.style.boxShadow = "none";
+    });
+
+    const card = document.getElementById(`vibe-card-${concept.vibe_id}`);
+    if (card) {
+        card.style.border = "2px solid #D4937A";
+        card.style.boxShadow = "0 8px 32px rgba(212,147,122,0.15)";
+        card.style.transform = "translateY(-4px)";
+    }
+  }
+
+  async function confirmVibe() {
+    if (!selectedVibe || !currentEventData) return;
+
+    const btn = document.getElementById("confirm-vibe-btn");
+    btn.textContent = "Generating brand identity...";
+    btn.style.opacity = "0.6";
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/brand-identity`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event_data: currentEventData,
+          chosen_vibe: selectedVibe
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+          localStorage.setItem('eventForgeBrandIdentity', JSON.stringify(data.brand_identity));
+          renderBrandIdentity(data.brand_identity);
+          btn.style.display = "none"; 
+      } else {
+          alert('Generation failed: ' + data.message);
+      }
+    } catch (err) {
+      alert("Failed to connect to API");
+    } finally {
+        btn.textContent = "Generate Brand Identity →";
+        btn.style.opacity = "1";
+        btn.disabled = false;
+    }
+  }
+
+  function renderBrandIdentity(identity) {
+    currentBrandIdentity = identity;
+    document.getElementById("brand-section").style.display = "block";
+    document.getElementById("confirm-vibe-btn").style.display = "none";
+
+    document.getElementById("brand-content").innerHTML = `
+      <div style="margin-bottom:1.5rem;">
+        <p style="color:#C4BCB0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px;">Brand Name</p>
+        <p style="color:#2C2C2A; font-family:'Outfit', sans-serif; font-size:24px; font-weight:700; margin:0;">${identity.brand_name}</p>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <p style="color:#C4BCB0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px;">Theme Statement</p>
+        <p style="color:#2C2C2A; font-family:'Manrope', sans-serif; font-size:15px; font-weight: 500; line-height:1.6; margin:0;">${identity.theme_statement}</p>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <p style="color:#C4BCB0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px;">Visual Identity</p>
+        <p style="color:#2C2C2A; font-family:'Manrope', sans-serif; font-size:14px; line-height:1.6; margin:0;">${identity.visual_identity}</p>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <p style="color:#C4BCB0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px;">Tone of Voice</p>
+        <p style="color:#2C2C2A; font-family:'Manrope', sans-serif; font-size:14px; line-height:1.6; margin:0;">${identity.tone_of_voice}</p>
+      </div>
+
+      <div style="
+        background: rgba(143,175,138,0.15);
+        border: 1px solid rgba(143,175,138,0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom:1.5rem;
+      ">
+        <p style="color:#6A8665; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px;">AI Agent Brief</p>
+        <p style="color:#2C2C2A; font-family:'Manrope', sans-serif; font-size:14px; font-weight:500; line-height:1.7; margin:0;" id="ai-brief-text">
+          ${identity.ai_agent_brief}
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; font-family:'Manrope', sans-serif;">
+        <div>
+          <p style="color:#C4BCB0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px;">Do</p>
+          ${identity.do_list.map(d => `
+            <p style="color:#2C2C2A; font-size:13px; font-weight: 500; margin:0 0 6px;">✓ ${d}</p>
+          `).join("")}
+        </div>
+        <div>
+          <p style="color:#C4BCB0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px;">Don't</p>
+          ${identity.dont_list.map(d => `
+            <p style="color:#2C2C2A; font-size:13px; font-weight: 500; margin:0 0 6px;">✗ ${d}</p>
+          `).join("")}
+        </div>
+      </div>
+    `;
+
+    document.getElementById("brand-section").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function copyBrandIdentity() {
+    if (!currentBrandIdentity) return;
+    const text = currentBrandIdentity.ai_agent_brief;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      btn.textContent = "Copied!";
+      setTimeout(() => btn.textContent = "Copy AI Agent Brief", 2000);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const rawData = localStorage.getItem('eventForgeData');
+    if (!rawData) return;
+    
+    try {
+      const resp = JSON.parse(rawData);
+      const data = resp.event_data;
+      
+      // Basic info
+      document.querySelector('h1.font-headline').textContent = data.title;
+      document.querySelector('p.font-body.italic').textContent = data.brief;
+      
+      // Links
+      const buttons = document.querySelectorAll('.flex.gap-4.mb-1 a');
+      if (buttons.length >= 2) {
+        buttons[0].href = resp.workspace_url || '#';
+        buttons[1].href = `/download/${resp.pptx_filename}` || '#';
+      }
+
+      // Timeline
+      const timelineContainer = document.querySelector('.glass-card:nth-of-type(1) .space-y-6');
+      if (timelineContainer && data.timeline) {
+        timelineContainer.innerHTML = `<div class="absolute left-[-1.15rem] top-2 bottom-2 w-px bg-outline-variant/30"></div>` + 
+          data.timeline.map((item, idx) => `
+          <div class="relative">
+            <div class="absolute left-[-1.45rem] top-1.5 w-2.5 h-2.5 rounded-full ${idx === 0 ? 'bg-primary' : 'bg-outline-variant'} border-2 border-surface"></div>
+            <p class="text-xs font-bold text-outline tracking-wider uppercase mb-1">${item.time}</p>
+            <p class="text-on-surface font-semibold font-body">${item.event}</p>
+            <p class="text-outline text-sm">Main Venue</p>
+          </div>
+        `).join('');
+      }
+
+      // PR Plan (using pr_plan.social_calendar or pr_messages)
+      const prContainer = document.querySelector('.glass-card:nth-of-type(2) ul.space-y-4');
+      const prItems = data.pr_plan ? data.pr_plan.social_calendar : (data.pr_messages || []);
+      if (prContainer && prItems.length > 0) {
+        prContainer.innerHTML = prItems.map(msg => `
+          <li class="p-4 rounded-2xl bg-white/40 border border-white/20 flex gap-4">
+            <span class="text-tertiary font-bold text-lg leading-none">•</span>
+            <p class="text-on-surface-variant leading-relaxed text-sm">${msg}</p>
+          </li>
+        `).join('');
+      }
+
+      // Tasks
+      const tasksContainer = document.querySelector('.glass-card:nth-of-type(3) .space-y-3');
+      const pendingCount = document.querySelector('.glass-card:nth-of-type(3) .bg-surface-variant\\/50');
+      if (tasksContainer && data.tasks) {
+        tasksContainer.innerHTML = data.tasks.map(task => {
+            const isDone = task.status.toLowerCase().includes('done');
+            const colorClass = isDone ? 'bg-secondary' : (task.status.toLowerCase().includes('progress') ? 'bg-amber-500' : 'bg-stone-400');
+            const deptClass = task.department.includes('PR') ? 'bg-dept-pr text-on-dept-pr' : 'bg-dept-logistics text-on-dept-logistics';
+            return `
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-white/30 group hover:bg-white/50 transition-colors">
+            <div class="flex flex-col gap-1">
+              <span class="text-on-surface font-semibold text-sm">${task.name}</span>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-md ${deptClass} text-[10px] font-bold uppercase tracking-tight">${task.department}</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full ${colorClass}"></span>
+              <span class="text-[10px] font-bold text-outline uppercase tracking-tighter">${task.status}</span>
+            </div>
+          </div>
+        `}).join('');
+        if (pendingCount) {
+             const pending = data.tasks.filter(t => !t.status.toLowerCase().includes('done')).length;
+             pendingCount.textContent = `${pending} Pending`;
+        }
+      }
+
+      // Pitch Deck Slides
+      const pptxContainer = document.querySelector('.glass-card:nth-of-type(4) .space-y-2');
+      const pptxCount = document.querySelector('.glass-card:nth-of-type(4) p.font-bold');
+      const pptxDownloadBtn = document.querySelector('.glass-card:nth-of-type(4) button');
+      if (pptxContainer && data.pitch_deck) {
+        pptxContainer.innerHTML = data.pitch_deck.map(slide => `
+          <div class="flex items-center gap-3 p-2 rounded-lg bg-white/20 text-xs">
+            <span class="font-bold text-primary w-4">${slide.slide_number}</span>
+            <span class="text-on-surface-variant font-medium">${slide.title}</span>
+          </div>
+        `).join('');
+        if (pptxCount) pptxCount.textContent = `${data.pitch_deck.length} slides generated`;
+        if (pptxDownloadBtn) {
+            pptxDownloadBtn.onclick = () => window.location.href = `/download/${resp.pptx_filename}`;
+        }
+      }
+
+      // Logistics Plan (Budget Markdown parsing)
+      const tbody = document.querySelector('tbody.font-body');
+      if (tbody && data.logistics_plan && data.logistics_plan.budget_table) {
+         const lines = data.logistics_plan.budget_table.split('\\n');
+         let html = '';
+         for (let i = 2; i < lines.length; i++) { // skip header & separator
+             const row = lines[i].split('|').filter(c => c.trim() !== '');
+             if (row.length >= 2) {
+                 html += `
+                 <tr class="border-b border-outline-variant/10">
+                   <td class="py-3 px-4 text-on-surface font-medium">${row[0].trim()}</td>
+                   <td class="py-3 px-4 text-on-surface text-right">${row[1].trim()}</td>
+                 </tr>`;
+             }
+         }
+         if (html) tbody.innerHTML = html;
+      }
+      
+      const promptTxt = localStorage.getItem('eventForgePrompt');
+      if (promptTxt) {
+          loadPosterConcepts(promptTxt, data);
+      }
+      
+    } catch (e) {
+      console.error("Error parsing event data:", e);
+    }
+  });
+</script>
+</body></html>
