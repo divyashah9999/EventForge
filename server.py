@@ -91,9 +91,15 @@ def generate(req: PromptRequest):
         }
     except Exception as e:
         print(f"❌ SERVER ERROR: {str(e)}")
+        error_msg = str(e)
+        if "429" in error_msg or "Quota" in error_msg:
+            friendly_msg = "Google API Rate Limit reached (Free Tier). Please wait 30-40 seconds and click Generate again!"
+        else:
+            friendly_msg = f"Generation failed: {error_msg}"
+            
         return {
             "status": "error", 
-            "message": f"Generation failed: {str(e)}"
+            "message": friendly_msg
         }
 
 @app.get("/download/{filename}")
