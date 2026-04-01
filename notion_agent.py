@@ -14,6 +14,14 @@ notion = Client(auth=os.getenv("NOTION_TOKEN"))
 _DEPARTMENTS = ["PR & Media", "Logistics", "Tech", "Design"]
 _STATUSES    = ["Not Started", "In Progress", "Done"]
 
+def _safe_text(text: str, max_length: int = 2000) -> str:
+    """Truncate text to obey Notion's 2000 character limit per rich_text object."""
+    if not text:
+        return ""
+    if len(text) <= max_length:
+        return text
+    return text[:max_length - 3] + "..."
+
 def _normalize(value: str, options: list[str], fallback: str) -> str:
     """Fuzzy-match `value` to the closest entry in `options`.
     Uses case-insensitive matching with a 0.5 similarity cutoff.
@@ -38,7 +46,7 @@ def _parse_markdown_table(md_string: str) -> dict:
     """Parses a simple markdown table string into a Notion table block."""
     lines = [line.strip() for line in (md_string or "").strip().split('\n') if line.strip()]
     if not lines:
-        return {"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": md_string or ""}}]}}
+        return {"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": _safe_text(md_string or "")}}]}}
     
     rows = []
     has_header = False
@@ -52,7 +60,7 @@ def _parse_markdown_table(md_string: str) -> dict:
             rows.append(cells)
             
     if not rows:
-        return {"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": md_string}}]}}
+        return {"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": _safe_text(md_string)}}]}}
         
     table_width = len(rows[0])
     children = []
@@ -64,7 +72,7 @@ def _parse_markdown_table(md_string: str) -> dict:
         cells_blocks = []
         for cell in row:
             # Notion table cells are arrays of rich text objects
-            cells_blocks.append([{"type": "text", "text": {"content": cell}}])
+            cells_blocks.append([{"type": "text", "text": {"content": _safe_text(cell)}}])
             
         children.append({
             "type": "table_row",
@@ -90,14 +98,14 @@ def create_event_workspace(json_data: dict) -> str:
     master_page = notion.pages.create(
         parent={"type": "page_id", "page_id": root_page_id},
         properties={
-            "title": {"title": [{"text": {"content": json_data["title"]}}]}
+            "title": {"title": [{"text": {"content": _safe_text(json_data.get("title", ""))}}]}
         },
         children=[
             {
                 "object": "block",
                 "type": "paragraph",
                 "paragraph": {
-                    "rich_text": [{"type": "text", "text": {"content": json_data["brief"]}}]
+                    "rich_text": [{"type": "text", "text": {"content": _safe_text(json_data.get("brief", ""))}}]
                 }
             }
         ]
@@ -112,16 +120,16 @@ def create_event_workspace(json_data: dict) -> str:
     # Social Calendar
     pr_children.append({"object": "block", "type": "heading_2", "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Social Calendar"}}]}})
     for msg in pr_plan.get("social_calendar", []):
-        pr_children.append({"object": "block", "type": "bulleted_list_item", "bulleted_list_item": {"rich_text": [{"type": "text", "text": {"content": msg}}]}})
+        pr_children.append({"object": "block", "type": "bulleted_list_item", "bulleted_list_item": {"rich_text": [{"type": "text", "text": {"content": _safe_text(msg)}}]}})
         
     # Influencer Outreach
     pr_children.append({"object": "block", "type": "heading_2", "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Influencer Outreach"}}]}})
     for msg in pr_plan.get("influencer_outreach", []):
-        pr_children.append({"object": "block", "type": "bulleted_list_item", "bulleted_list_item": {"rich_text": [{"type": "text", "text": {"content": msg}}]}})
+        pr_children.append({"object": "block", "type": "bulleted_list_item", "bulleted_list_item": {"rich_text": [{"type": "text", "text": {"content": _safe_text(msg)}}]}})
         
     # Email Template
     pr_children.append({"object": "block", "type": "heading_2", "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Email Template"}}]}})
-    pr_children.append({"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": pr_plan.get("email_template", "")}}]}})
+    pr_children.append({"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": _safe_text(pr_plan.get("email_template", ""))}}]}})
 
     pr_page = notion.pages.create(
         parent={"page_id": master_page_id},
@@ -141,11 +149,11 @@ def create_event_workspace(json_data: dict) -> str:
     # Hardware Checklist
     logistics_children.append({"object": "block", "type": "heading_2", "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Hardware Checklist"}}]}})
     for item in log_plan.get("hardware_checklist", []):
-        logistics_children.append({"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": item}}], "checked": False}})
+        logistics_children.append({"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": _safe_text(item)}}], "checked": False}})
         
     # Venue Setup
     logistics_children.append({"object": "block", "type": "heading_2", "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Venue Setup"}}]}})
-    logistics_children.append({"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": log_plan.get("venue_setup", "")}}]}})
+    logistics_children.append({"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": _safe_text(log_plan.get("venue_setup", ""))}}]}})
 
     logistics_page = notion.pages.create(
         parent={"page_id": master_page_id},
@@ -214,7 +222,7 @@ def create_event_workspace(json_data: dict) -> str:
         dept   = _normalize(task.get("department", ""), _DEPARTMENTS, _DEPARTMENTS[0])
         status = _normalize(task.get("status", ""),     _STATUSES,    _STATUSES[0])
         task_props = {
-            "Name": {"title": [{"text": {"content": task["name"]}}]},
+            "Name": {"title": [{"text": {"content": _safe_text(task["name"])}}]},
             "Department": {"select": {"name": dept}},
             "Status": {"select": {"name": status}},
         }
