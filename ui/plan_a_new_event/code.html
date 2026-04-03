@@ -159,16 +159,70 @@
 <div class="absolute top-0 right-0 w-64 h-64 bg-tertiary-fixed opacity-10 rounded-full blur-[80px] -mr-32 -mt-32"></div>
 <div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary-fixed opacity-10 rounded-full blur-[80px] -ml-32 -mb-32"></div>
 <div class="relative space-y-8">
-<!-- Main Input -->
-<div class="space-y-4">
-<label class="block text-sm font-bold tracking-widest text-primary uppercase ml-1">The Vision</label>
-<div class="relative">
-<textarea id="event-prompt" class="frosted-textarea w-full h-64 bg-surface-container-lowest/40 backdrop-blur-[8px] rounded-2xl p-8 text-xl font-body border-none resize-none placeholder:text-outline/50 transition-all leading-relaxed" placeholder="Describe your event — type, audience, duration, goals..."></textarea>
-<div class="absolute bottom-6 right-8 text-outline/40 text-sm">
-                Min. 50 words recommended
+          <!-- Tab Switcher -->
+          <div class="flex gap-8 mb-6 border-b border-[#2C2C2A]/10 pb-0">
+            <button id="tab-vision" class="px-4 py-2 text-xs font-bold tracking-[0.2em] text-primary border-b-2 border-primary transition-all uppercase">The Vision</button>
+            <button id="tab-blueprint" class="px-4 py-2 text-xs font-bold tracking-[0.2em] text-outline hover:text-primary transition-all uppercase">Guided Blueprint</button>
+          </div>
+
+          <!-- Mode: Vision (Default) -->
+          <div id="mode-vision" class="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <label class="block text-xs font-bold tracking-widest text-primary uppercase ml-1 opacity-60">Narrative Description</label>
+            <div class="relative">
+              <textarea id="event-prompt" class="frosted-textarea w-full h-64 bg-surface-container-lowest/40 backdrop-blur-[8px] rounded-2xl p-8 text-xl font-body border-none resize-none placeholder:text-outline/50 transition-all leading-relaxed" placeholder="Describe your event — type, audience, duration, goals..."></textarea>
+              <div class="absolute bottom-6 right-8 text-outline/40 text-[10px] font-bold tracking-widest uppercase">
+                Free Prompting Mode
               </div>
-</div>
-</div>
+            </div>
+          </div>
+
+          <!-- Mode: Blueprint (Hidden) -->
+          <div id="mode-blueprint" class="hidden space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="block text-[10px] font-bold tracking-widest text-outline uppercase ml-1">Event Name</label>
+                <input id="bp-name" class="w-full bg-surface-container-lowest/40 backdrop-blur-[8px] rounded-xl px-4 py-3 border-none focus:ring-2 focus:ring-secondary-fixed text-sm font-semibold" placeholder="e.g. Delhi AI-ML Innovate" value="Delhi AI-ML Innovate" />
+              </div>
+              <div class="space-y-2">
+                <label class="block text-[10px] font-bold tracking-widest text-outline uppercase ml-1">Venue / Location</label>
+                <input id="bp-venue" class="w-full bg-surface-container-lowest/40 backdrop-blur-[8px] rounded-xl px-4 py-3 border-none focus:ring-2 focus:ring-secondary-fixed text-sm font-semibold" placeholder="e.g. MSIT, Janakpuri" value="MSIT, Janakpuri" />
+              </div>
+              <div class="space-y-2">
+                <label class="block text-[10px] font-bold tracking-widest text-outline uppercase ml-1">Scale (Attendees)</label>
+                <input id="bp-scale" class="w-full bg-surface-container-lowest/40 backdrop-blur-[8px] rounded-xl px-4 py-3 border-none focus:ring-2 focus:ring-secondary-fixed text-sm font-semibold" placeholder="e.g. 300+ Students" value="300+ Students" />
+              </div>
+              <div class="space-y-2">
+                <label class="block text-[10px] font-bold tracking-widest text-outline uppercase ml-1">Branding Vibe</label>
+                <select id="bp-vibe" class="w-full bg-surface-container-lowest/40 backdrop-blur-[8px] rounded-xl px-4 py-3 border-none focus:ring-2 focus:ring-secondary-fixed text-sm font-semibold text-on-surface">
+                  <option value="Cyberpunk Neon (Purples/Cyans)">Cyberpunk Neon (Purples/Cyans)</option>
+                  <option value="Minimalist Earth (Charcoal/Cream)">Minimalist Earth (Charcoal/Cream)</option>
+                  <option value="Corporate Professional (Navy/Gold)">Corporate Professional (Navy/Gold)</option>
+                  <option value="Organic Creative (Sage/Terracotta)">Organic Creative (Sage/Terracotta)</option>
+                </select>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <label class="block text-[10px] font-bold tracking-widest text-outline uppercase ml-1">Core Sprint Requirements</label>
+              <div class="grid grid-cols-2 gap-4">
+                <label class="flex items-center gap-3 p-4 rounded-xl bg-white/20 border border-white/10 cursor-pointer hover:bg-white/30 transition-all">
+                  <input type="checkbox" id="req-timeline" checked class="w-4 h-4 rounded-sm bg-white/30 border-none text-primary focus:ring-0" />
+                  <span class="text-[11px] font-bold uppercase tracking-tight">3-Day Timeline</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-xl bg-white/20 border border-white/10 cursor-pointer hover:bg-white/30 transition-all">
+                  <input type="checkbox" id="req-sponsor" checked class="w-4 h-4 rounded-sm bg-white/30 border-none text-primary focus:ring-0" />
+                  <span class="text-[11px] font-bold uppercase tracking-tight">Sponsorship Tiers</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-xl bg-white/20 border border-white/10 cursor-pointer hover:bg-white/30 transition-all">
+                  <input type="checkbox" id="req-mentor" checked class="w-4 h-4 rounded-sm bg-white/30 border-none text-primary focus:ring-0" />
+                  <span class="text-[11px] font-bold uppercase tracking-tight">Industry Mentorship</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-xl bg-white/20 border border-white/10 cursor-pointer hover:bg-white/30 transition-all">
+                  <input type="checkbox" id="req-snacks" checked class="w-4 h-4 rounded-sm bg-white/30 border-none text-primary focus:ring-0" />
+                  <span class="text-[11px] font-bold uppercase tracking-tight">Midnight Catering</span>
+                </label>
+              </div>
+            </div>
+          </div>
 <!-- Quick Fill Chips -->
 <div class="space-y-4">
 <span class="text-xs font-semibold text-outline tracking-wider block ml-1">QUICK START TEMPLATES</span>
@@ -222,9 +276,64 @@
 <div class="fixed top-0 left-0 w-[500px] h-[500px] bg-tertiary-fixed/20 blur-[120px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 <div class="fixed bottom-0 right-0 w-[400px] h-[400px] bg-secondary-fixed/20 blur-[100px] rounded-full translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
 <script>
+  // Tab Switching Logic
+  const tabVision = document.getElementById('tab-vision');
+  const tabBlueprint = document.getElementById('tab-blueprint');
+  const modeVision = document.getElementById('mode-vision');
+  const modeBlueprint = document.getElementById('mode-blueprint');
+
+  let currentMode = 'vision';
+
+  tabVision.addEventListener('click', () => {
+    currentMode = 'vision';
+    tabVision.classList.add('text-primary', 'border-b-2', 'border-primary');
+    tabVision.classList.remove('text-outline');
+    tabBlueprint.classList.remove('text-primary', 'border-b-2', 'border-primary');
+    tabBlueprint.classList.add('text-outline');
+    modeVision.classList.remove('hidden');
+    modeBlueprint.classList.add('hidden');
+  });
+
+  tabBlueprint.addEventListener('click', () => {
+    currentMode = 'blueprint';
+    tabBlueprint.classList.add('text-primary', 'border-b-2', 'border-primary');
+    tabBlueprint.classList.remove('text-outline');
+    tabVision.classList.remove('text-primary', 'border-b-2', 'border-primary');
+    tabVision.classList.add('text-outline');
+    modeBlueprint.classList.remove('hidden');
+    modeVision.classList.add('hidden');
+  });
+
+  // Prompt Fabricator
+  function getBlueprintPrompt() {
+    const name = document.getElementById('bp-name').value;
+    const venue = document.getElementById('bp-venue').value;
+    const scale = document.getElementById('bp-scale').value;
+    const vibe = document.getElementById('bp-vibe').value;
+    
+    let reqs = [];
+    if (document.getElementById('req-timeline').checked) reqs.push("detailed hour-by-hour timeline for all 3 days, including final judging rounds");
+    if (document.getElementById('req-sponsor').checked) reqs.push("three clear sponsorship tiers (Diamond, Gold, Silver) with specific deliverables");
+    if (document.getElementById('req-mentor').checked) reqs.push("1:1 Mentorship hour with industry experts");
+    if (document.getElementById('req-snacks').checked) reqs.push("Midnight snacks and catering logistics");
+
+    return `Plan a "${name}" mega-hackathon hosted at ${venue}.
+Scale: ${scale}.
+Branding Style: ${vibe}.
+Focus: Generative AI, LLM Fine-tuning, and Computer Vision.
+Specific Requirements:
+${reqs.map(r => "- Include " + r).join('\n')}`;
+  }
+
   document.getElementById('generate-button').addEventListener('click', async () => {
-    const promptText = document.getElementById('event-prompt').value;
-    if (!promptText.trim()) return alert("Please enter a description for your event.");
+    let promptText = "";
+    
+    if (currentMode === 'vision') {
+      promptText = document.getElementById('event-prompt').value;
+      if (!promptText.trim()) return alert("Please enter a description for your event.");
+    } else {
+      promptText = getBlueprintPrompt();
+    }
 
     const btn = document.getElementById('generate-button');
     const btnText = document.getElementById('generate-text');
