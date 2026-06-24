@@ -1,7 +1,7 @@
 # server.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import os
@@ -21,6 +21,10 @@ from pptx_agent import generate_pitch_deck
 
 app = FastAPI()
 app.mount("/ui", StaticFiles(directory="ui", html=True), name="ui")
+
+@app.get("/")
+def read_root():
+    return RedirectResponse(url="/ui/plan_a_new_event/code.html")
 
 app.add_middleware(
     CORSMiddleware,
